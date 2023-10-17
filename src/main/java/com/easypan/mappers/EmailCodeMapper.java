@@ -24,9 +24,6 @@ public interface EmailCodeMapper<T, P> extends BaseMapper<T, P> {
      */
     T selectByEmailAndCode(@Param("email") String email, @Param("code") String code);
 
-    /**
-    * 设置邮箱状态为已使用 status：1
-    * */
     void disableEmailCode(@Param("email") String email);
 
 }

@@ -32,7 +32,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @RestController("accountController")
-public class AccountController extends ABaseController {
+public class AccountController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     private static final String CONTENT_TYPE = "Content-Type";
@@ -275,5 +275,5 @@ public class AccountController extends ABaseController {
         return getSuccessResponseVO(null);
     }
 
-
+    // qq
 }
