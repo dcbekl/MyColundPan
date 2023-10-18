@@ -1,9 +1,9 @@
 package com.easypan.mappers;
 
 
- import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Param;
 
- import java.util.List;
+import java.util.List;
 
  interface BaseMapper<T, P> {
 	/**

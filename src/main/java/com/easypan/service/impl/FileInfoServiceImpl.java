@@ -152,7 +152,6 @@ public class FileInfoServiceImpl implements FileInfoService {
         return this.fileInfoMapper.deleteByFileIdAndUserId(fileId, userId);
     }
 
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public UploadResultDto uploadFile(SessionWebUserDto webUserDto, String fileId, MultipartFile file, String fileName, String filePid, String fileMd5,
@@ -261,7 +260,8 @@ public class FileInfoServiceImpl implements FileInfoService {
             return resultDto;
         } catch (BusinessException e) {
             uploadSuccess = false;
-            logger.error("文件上传失败", e);
+//            logger.error("文件上传失败", e);
+            logger.error("内存空间不足", e);
             throw e;
         } catch (Exception e) {
             uploadSuccess = false;

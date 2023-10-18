@@ -7,6 +7,8 @@ public class UserSpaceDto implements Serializable {
     private Long totalSpace;
 
     public Long getUseSpace() {
+        // TODO
+        if(useSpace == null) useSpace = 0L;
         return useSpace;
     }
 

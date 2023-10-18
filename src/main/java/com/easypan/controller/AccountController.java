@@ -32,7 +32,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @RestController("accountController")
-public class AccountController extends BaseController {
+public class AccountController extends ABaseController {
     private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     private static final String CONTENT_TYPE = "Content-Type";
@@ -227,6 +227,12 @@ public class AccountController extends BaseController {
         return getSuccessResponseVO(sessionWebUserDto);
     }
 
+    /**
+     *
+     * 获取用户空间大小
+     * @param session
+     * @return
+     */
     @RequestMapping("/getUseSpace")
     @GlobalInterceptor
     public ResponseVO getUseSpace(HttpSession session) {
@@ -234,12 +240,21 @@ public class AccountController extends BaseController {
         return getSuccessResponseVO(redisComponent.getUserSpaceUse(sessionWebUserDto.getUserId()));
     }
 
+    /**
+     * 退出登录
+     * @param session
+     * @return
+     */
     @RequestMapping("/logout")
     public ResponseVO logout(HttpSession session) {
         session.invalidate();
         return getSuccessResponseVO(null);
     }
 
+    /**
+     * 更换头像
+     *
+     * */
     @RequestMapping("/updateUserAvatar")
     @GlobalInterceptor
     public ResponseVO updateUserAvatar(HttpSession session, MultipartFile avatar) {
@@ -275,5 +290,5 @@ public class AccountController extends BaseController {
         return getSuccessResponseVO(null);
     }
 
-    // qq
+
 }

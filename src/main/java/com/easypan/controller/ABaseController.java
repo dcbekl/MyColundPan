@@ -5,11 +5,13 @@ import com.easypan.entity.dto.SessionWebUserDto;
 import com.easypan.entity.enums.ResponseCodeEnum;
 import com.easypan.entity.vo.PaginationResultVO;
 import com.easypan.entity.vo.ResponseVO;
+import com.easypan.service.FileInfoService;
 import com.easypan.utils.CopyTools;
 import com.easypan.utils.StringTools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -23,6 +25,9 @@ import java.io.OutputStream;
  * @Description:
  **/
 public class ABaseController {
+
+    @Resource
+    protected FileInfoService fileInfoService;
 
     private static final Logger logger = LoggerFactory.getLogger(ABaseController.class);
 
@@ -38,6 +43,7 @@ public class ABaseController {
         responseVO.setData(t);
         return responseVO;
     }
+
 
     protected SessionWebUserDto getUserInfoFromSession(HttpSession session) {
         SessionWebUserDto sessionWebUserDto = (SessionWebUserDto) session.getAttribute(Constants.SESSION_KEY);
