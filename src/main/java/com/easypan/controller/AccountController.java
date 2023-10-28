@@ -59,6 +59,10 @@ public class AccountController extends ABaseController {
      * @param session
      * @param type
      * @throws IOException
+     *
+     * 随机获取验证码 code， 将验证码信息存入session中。便于检验验证码的正确性
+     * 将验证码，修饰成图片信息，并返回给前端。
+     *
      */
     @RequestMapping(value = "/checkCode")
     public void checkCode(HttpServletResponse response, HttpSession session, Integer type) throws
@@ -77,7 +81,7 @@ public class AccountController extends ABaseController {
         } else {
             session.setAttribute(Constants.CHECK_CODE_KEY_EMAIL, code); // 注册验证码
         }
-        vCode.write(response.getOutputStream());
+        vCode.write(response.getOutputStream());  // 验证码写入
     }
 
     /**
@@ -86,6 +90,8 @@ public class AccountController extends ABaseController {
      * @date: 20:39 2023/4/1
      * @param: [session, email, checkCode, type]
      * @return: com.easypan.entity.vo.ResponseVO
+     *
+     *
      */
     @RequestMapping("/sendEmailCode")
     @GlobalInterceptor(checkLogin = false, checkParams = true)
@@ -104,13 +110,19 @@ public class AccountController extends ABaseController {
         }
     }
 
+
     /**
-     * @Description: 注册
-     * @auther: laoluo
-     * @date: 20:39 2023/4/1
-     * @param: [session, email, nickName, password, checkCode, emailCode]
+     * @description: 用户注册接口
+     * @author: kl
+     * @date: 2023/10/27 13:44
+     * @param: session
+     * @param: email 要求表中唯一
+     * @param: nickName 要求表中唯一
+     * @param: password 8-12位
+     * @param: checkCode 图片验证码
+     * @param: emailCode 发送的邮箱验证码
      * @return: com.easypan.entity.vo.ResponseVO
-     */
+     * */
     @RequestMapping("/register")
     @GlobalInterceptor(checkLogin = false, checkParams = true)
     public ResponseVO register(HttpSession session,
@@ -124,7 +136,7 @@ public class AccountController extends ABaseController {
                 throw new BusinessException("图片验证码不正确");
             }
             userInfoService.register(email, nickName, password, emailCode);
-            return getSuccessResponseVO(null);
+            return getSuccessResponseVO(null); // 注册成功信息
         } finally {
             session.removeAttribute(Constants.CHECK_CODE_KEY);
         }

@@ -1,5 +1,6 @@
 ##ignore this file##
 /target/
+/src/test/
 /.idea/
 /.settings/
 /.vscode/

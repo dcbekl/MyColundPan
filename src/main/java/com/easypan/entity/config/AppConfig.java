@@ -60,6 +60,12 @@ public class AppConfig {
     private String qqUrlRedirect;
 
 
+    /**
+     * @description: 所有他用户文件存放的根目录
+     * @author: kl
+     * @date: 2023/10/27 16:44
+     * @return: java.lang.String
+     * */
     public String getProjectFolder() {
         if (!StringTools.isEmpty(projectFolder) && !projectFolder.endsWith("/")) {
             projectFolder = projectFolder + "/";

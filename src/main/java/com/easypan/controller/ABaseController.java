@@ -1,6 +1,7 @@
 package com.easypan.controller;
 
 import com.easypan.entity.constants.Constants;
+import com.easypan.entity.dto.SessionShareDto;
 import com.easypan.entity.dto.SessionWebUserDto;
 import com.easypan.entity.enums.ResponseCodeEnum;
 import com.easypan.entity.vo.PaginationResultVO;
@@ -45,6 +46,13 @@ public class ABaseController {
     }
 
 
+    /**
+     * @description: 获取他用户的nickName、userId、isAdmin、avatar等属性
+     * @author: kl
+     * @date: 2023/10/27 14:28
+     * @param: session
+     * @return: com.easypan.entity.dto.SessionWebUserDto
+     * */
     protected SessionWebUserDto getUserInfoFromSession(HttpSession session) {
         SessionWebUserDto sessionWebUserDto = (SessionWebUserDto) session.getAttribute(Constants.SESSION_KEY);
         return sessionWebUserDto;
@@ -60,7 +68,10 @@ public class ABaseController {
         return resultVO;
     }
 
-
+    protected SessionShareDto getSessionShareFromSession(HttpSession session, String shareId) {
+        SessionShareDto sessionShareDto = (SessionShareDto) session.getAttribute(Constants.SESSION_SHARE_KEY + shareId);
+        return sessionShareDto;
+    }
 
     protected void readFile(HttpServletResponse response, String filePath) {
         if (!StringTools.pathIsOk(filePath)) {

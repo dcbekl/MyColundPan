@@ -4,6 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 
+/**
+ * 文件上传结果对象
+ * fileId ： 文件唯一标识符id
+ * status ： 状态
+ * */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UploadResultDto implements Serializable {
     private String fileId;

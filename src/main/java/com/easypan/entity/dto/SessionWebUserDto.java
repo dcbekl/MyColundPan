@@ -1,5 +1,8 @@
 package com.easypan.entity.dto;
 
+/**
+ * 存储在session中的用户信息
+ * */
 public class SessionWebUserDto {
     private String nickName;
     private String userId;

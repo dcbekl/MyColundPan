@@ -116,13 +116,14 @@ public interface UserInfoService {
 
     void register(String email, String nickName, String password, String emailCode);
 
+
     SessionWebUserDto login(String email, String password);
 
     void resetPwd(String email, String password, String emailCode);
 
-//    void updateUserStatus(String userId, Integer status);
-//
+    void updateUserStatus(String userId, Integer status);
+
 //    SessionWebUserDto qqLogin(String code);
-//
-//    void changeUserSpace(String userId, Integer changeSpace);
+
+    void changeUserSpace(String userId, Integer changeSpace);
 }

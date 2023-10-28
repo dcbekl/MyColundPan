@@ -22,14 +22,14 @@ public class RedisUtils<V> {
     /**
      * 删除缓存
      *
-     * @param key 可以传一个值 或多个
+     * @param keys 可以传一个值 或多个
      */
-    public void delete(String... key) {
-        if (key != null && key.length > 0) {
-            if (key.length == 1) {
-                redisTemplate.delete(key[0]);
+    public void delete(String... keys) {
+        if (keys != null && keys.length > 0) {
+            if (keys.length == 1) {
+                redisTemplate.delete(keys[0]);
             } else {
-                redisTemplate.delete((Collection<String>) CollectionUtils.arrayToList(key));
+                redisTemplate.delete((Collection<String>) CollectionUtils.arrayToList(keys));
             }
         }
     }

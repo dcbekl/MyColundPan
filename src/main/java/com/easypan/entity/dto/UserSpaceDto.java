@@ -2,6 +2,10 @@ package com.easypan.entity.dto;
 
 import java.io.Serializable;
 
+/**
+ * useSpace ： 用户已使用的空间
+ * totalSpace ： 用户的总空间大小
+ */
 public class UserSpaceDto implements Serializable {
     private Long useSpace;
     private Long totalSpace;

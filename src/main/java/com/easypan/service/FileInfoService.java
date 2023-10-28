@@ -63,6 +63,20 @@ public interface FileInfoService {
      */
     Integer deleteFileInfoByFileIdAndUserId(String fileId, String userId);
 
+    /**
+     * @description:
+     * @author: kl
+     * @date: 2023/10/27 14:28
+     * @param: webUserDto   用户信息
+     * @param: fileId
+     * @param: file
+     * @param: fileName
+     * @param: filePid
+     * @param: fileMd5
+     * @param: chunkIndex
+     * @param: chunks
+     * @return: com.easypan.entity.dto.UploadResultDto
+     * */
     UploadResultDto uploadFile(SessionWebUserDto webUserDto, String fileId, MultipartFile file, String fileName, String filePid, String fileMd5, Integer chunkIndex,
                                Integer chunks);
 

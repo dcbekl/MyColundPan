@@ -4,6 +4,9 @@ import org.springframework.web.bind.annotation.Mapping;
 
 import java.lang.annotation.*;
 
+/**
+ * @author kl
+ */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

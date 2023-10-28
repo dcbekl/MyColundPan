@@ -3,6 +3,10 @@ package com.easypan.entity.enums;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+/**
+ * 文件的类型
+ * 1:视频 2:音频  3:图片 4:pdf 5:word 6:excel 7:txt 8:code 9:zip 10:其他文件
+ * */
 public enum FileTypeEnums {
     //1:视频 2:音频  3:图片 4:pdf 5:word 6:excel 7:txt 8:code 9:zip 10:其他文件
     VIDEO(FileCategoryEnums.VIDEO, 1, new String[]{".mp4", ".avi", ".rmvb", ".mkv", ".mov"}, "视频"),
@@ -30,6 +34,13 @@ public enum FileTypeEnums {
         this.desc = desc;
     }
 
+    /**
+     * @description: 根据文件的后缀名，获取文件的类型
+     * @author: kl
+     * @date: 2023/10/27 17:37
+     * @param: suffix
+     * @return: com.easypan.entity.enums.FileTypeEnums
+     * */
     public static FileTypeEnums getFileTypeBySuffix(String suffix) {
         for (FileTypeEnums item : FileTypeEnums.values()) {
             if (ArrayUtils.contains(item.getSuffixs(), suffix)) {

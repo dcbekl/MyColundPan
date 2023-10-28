@@ -46,6 +46,13 @@ public class StringTools {
         return fileNameReal + "_" + getRandomString(Constants.LENGTH_5) + suffix;
     }
 
+    /**
+     * @description: 生成长度为count的随机字符串。
+     * @author: kl
+     * @date: 2023/10/27 14:45
+     * @param: count
+     * @return: java.lang.String
+     * */
     public static final String getRandomString(Integer count) {
         return RandomStringUtils.random(count, true, true);
     }

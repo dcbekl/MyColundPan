@@ -172,7 +172,8 @@ public class FileInfoServiceImpl implements FileInfoService {
                 infoQuery.setSimplePage(new SimplePage(0, 1));
                 infoQuery.setStatus(FileStatusEnums.USING.getStatus());
                 List<FileInfo> dbFileList = this.fileInfoMapper.selectList(infoQuery);
-                //秒传
+                // todo 把上面能否秒传，进行封装
+                //秒传  已经保存
                 if (!dbFileList.isEmpty()) {
                     FileInfo dbFile = dbFileList.get(0);
                     //判断文件状态
@@ -198,8 +199,14 @@ public class FileInfoServiceImpl implements FileInfoService {
                     return resultDto;
                 }
             }
+
+            /*
+            * 切片上传
+            *
+            * */
             //暂存在临时目录
             String tempFolderName = appConfig.getProjectFolder() + Constants.FILE_FOLDER_TEMP;
+            // 用户id和文件id拼接成文件存放的相对目录
             String currentUserFolderName = webUserDto.getUserId() + fileId;
             //创建临时目录
             tempFileFolder = new File(tempFolderName + currentUserFolderName);
@@ -207,7 +214,7 @@ public class FileInfoServiceImpl implements FileInfoService {
                 tempFileFolder.mkdirs();
             }
 
-            //判断磁盘空间
+            // 判断磁盘空间是否充足
             Long currentTempSize = redisComponent.getFileTempSize(webUserDto.getUserId(), fileId);
             if (file.getSize() + currentTempSize + spaceDto.getUseSpace() > spaceDto.getTotalSpace()) {
                 throw new BusinessException(ResponseCodeEnum.CODE_904);
@@ -222,13 +229,18 @@ public class FileInfoServiceImpl implements FileInfoService {
                 resultDto.setStatus(UploadStatusEnums.UPLOADING.getCode());
                 return resultDto;
             }
+
             //最后一个分片上传完成，记录数据库，异步合并分片
+            // 获得当前月份
             String month = DateUtil.format(curDate, DateTimePatternEnum.YYYYMM.getPattern());
+            // 文件后缀名，如.txt .sh
             String fileSuffix = StringTools.getFileSuffix(fileName);
-            //真实文件名
+            //真实文件名 userId + fileId
             String realFileName = currentUserFolderName + fileSuffix;
+            // 获得文件的类型
             FileTypeEnums fileTypeEnum = FileTypeEnums.getFileTypeBySuffix(fileSuffix);
             //自动重命名
+            // TODO 调试查看，没看看懂，在干什么
             fileName = autoRename(filePid, webUserDto.getUserId(), fileName);
             FileInfo fileInfo = new FileInfo();
             fileInfo.setFileId(fileId);
@@ -279,6 +291,13 @@ public class FileInfoServiceImpl implements FileInfoService {
         }
     }
 
+    /**
+     * @description: 更新redis和mysql中用户使用的空间大小
+     * @author: kl
+     * @date: 2023/10/27 17:47
+     * @param: webUserDto  用户
+     * @param: totalSize   用户再次使用的空间
+     * */
     private void updateUserSpace(SessionWebUserDto webUserDto, Long totalSize) {
         Integer count = userInfoMapper.updateUserSpace(webUserDto.getUserId(), totalSize, null);
         if (count == 0) {
@@ -303,6 +322,13 @@ public class FileInfoServiceImpl implements FileInfoService {
         return fileName;
     }
 
+    /**
+     * @description: 合并文件切片
+     * @author: kl
+     * @date: 2023/10/27 17:56
+     * @param: fileId
+     * @param: webUserDto
+     * */
     @Async
     public void transferFile(String fileId, SessionWebUserDto webUserDto) {
         Boolean transferSuccess = true;
@@ -326,6 +352,7 @@ public class FileInfoServiceImpl implements FileInfoService {
             String month = DateUtil.format(fileInfo.getCreateTime(), DateTimePatternEnum.YYYYMM.getPattern());
             //目标目录
             String targetFolderName = appConfig.getProjectFolder() + Constants.FILE_FOLDER_FILE;
+            // TODO 修改存放的目标文件夹
             File targetFolder = new File(targetFolderName + "/" + month);
             if (!targetFolder.exists()) {
                 targetFolder.mkdirs();
@@ -365,6 +392,15 @@ public class FileInfoServiceImpl implements FileInfoService {
         }
     }
 
+    /**
+     * @description: 合并文件
+     * @author: kl
+     * @date: 2023/10/27 18:01
+     * @param: dirPath
+     * @param: toFilePath
+     * @param: fileName
+     * @param: delSource
+     * */
     public static void union(String dirPath, String toFilePath, String fileName, boolean delSource) throws BusinessException {
         File dir = new File(dirPath);
         if (!dir.exists()) {

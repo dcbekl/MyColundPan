@@ -2,6 +2,9 @@ package com.easypan.exception;
 import com.easypan.entity.enums.ResponseCodeEnum;
 
 
+/**
+ * @author kl
+ */
 public class BusinessException extends RuntimeException {
 
     private ResponseCodeEnum codeEnum;

@@ -15,6 +15,7 @@ import com.easypan.entity.vo.PaginationResultVO;
 import com.easypan.exception.BusinessException;
 import com.easypan.mappers.UserInfoMapper;
 import com.easypan.service.EmailCodeService;
+import com.easypan.service.FileInfoService;
 import com.easypan.service.UserInfoService;
 import com.easypan.utils.JsonUtils;
 import com.easypan.utils.StringTools;
@@ -50,6 +51,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Resource
     private RedisComponent redisComponent;
+
+    @Resource
+    private FileInfoService fileInfoService;
 
     private static final Logger logger = LoggerFactory.getLogger(UserInfoServiceImpl.class);
 
@@ -279,5 +283,25 @@ public class UserInfoServiceImpl implements UserInfoService {
         UserInfo updateInfo = new UserInfo();
         updateInfo.setPassword(StringTools.encodeByMD5(password));
         this.userInfoMapper.updateByEmail(updateInfo, email);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateUserStatus(String userId, Integer status) {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setStatus(status);
+        if (UserStatusEnum.DISABLE.getStatus().equals(status)) {
+            userInfo.setUseSpace(0L);
+            fileInfoService.deleteFileByUserId(userId);
+        }
+        userInfoMapper.updateByUserId(userInfo, userId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void changeUserSpace(String userId, Integer changeSpace) {
+        Long space = changeSpace * Constants.MB;
+        this.userInfoMapper.updateUserSpace(userId, null, space);
+        redisComponent.resetUserSpaceUse(userId);
     }
 }

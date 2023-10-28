@@ -1,4 +1,4 @@
-package com.easypan.aspect;
+package com.easypan.mappers.aspect;
 
 import com.easypan.annotation.GlobalInterceptor;
 import com.easypan.annotation.VerifyParam;

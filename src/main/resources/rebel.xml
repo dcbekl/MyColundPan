@@ -14,7 +14,7 @@
 	</classpath>
 
 	<web>
-		<link target="/">
+		<link target="//">
 			<dir name="D:/WorkSpaces/JavaSpace/eazypan/src/main/webapp">
 			</dir>
 		</link>

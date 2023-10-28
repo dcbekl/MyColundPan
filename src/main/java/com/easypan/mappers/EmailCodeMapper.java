@@ -24,6 +24,10 @@ public interface EmailCodeMapper<T, P> extends BaseMapper<T, P> {
      */
     T selectByEmailAndCode(@Param("email") String email, @Param("code") String code);
 
+    /**
+     * 逻辑删除验证码。
+     * email对应的验证码的已使用状态（state）设置为已使用（1）
+     * */
     void disableEmailCode(@Param("email") String email);
 
 }

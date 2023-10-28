@@ -140,7 +140,8 @@ public class EmailCodeServiceImpl implements EmailCodeService {
      * */
     @Override
     public void sendEmailCode(String email, Integer type) {
-        if(type == Constants.ZERO) { // 如果是邮箱注册账号
+        // fixme
+        if(type.equals(Constants.ZERO)) { // 如果是邮箱注册账号
             UserInfo userInfo = userInfoMapper.selectByEmail(email);
             if(userInfo != null) {
                 throw new BusinessException("邮箱已存在");
@@ -195,8 +196,17 @@ public class EmailCodeServiceImpl implements EmailCodeService {
         }
     }
 
+    /**
+     * 检查邮箱对应的验证码是否正确，验证码是否有效
+     *
+     * 判断验证码是否过期的逻辑：
+     *      用当前时间 - 从数据库中查出验证码的创建时间，获得验证码的发送时间。然后判断是否超过验证码的有效时间
+     *
+     * todo 将验证码存入redis中，而不是缓存中
+     * */
     @Override
     public void checkCode(String email, String code) {
+        // todo sql语句将state为1的数据也查出来了。好像是为了走联合主键
         EmailCode emailCode = emailCodeMapper.selectByEmailAndCode(email, code);
         if (null == emailCode) {
             throw new BusinessException("邮箱验证码不正确");

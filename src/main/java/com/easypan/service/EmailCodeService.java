@@ -65,5 +65,12 @@ public interface EmailCodeService {
 
     void sendMailCode(String toEmail, String code);
 
+    /**
+     * 检查邮箱对应的验证码是否正确，验证码是否有效
+     *
+     * 判断验证码是否过期的逻辑：
+     *      用当前时间 - 从数据库中查出验证码的创建时间，获得验证码的发送时间。然后判断是否超过验证码的有效时间
+     * */
     void checkCode(String email, String code);
+
 }
