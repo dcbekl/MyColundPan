@@ -29,7 +29,8 @@ public class IPInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        //过滤ip,若用户在白名单内，则放行
+        // 获取请求接口的ip
+        // FIXME 没有获取真实的请求ip
         String ipAddress= IPUtils.getRealIP(request);
 
         // ip为空
@@ -37,12 +38,13 @@ public class IPInterceptor implements HandlerInterceptor {
             return false;
         }
 
+        // FIXME ip拦截
         // 访问ip不在白名单中
-        if(!IpConfig.ALLOW_IP_LIST.contains(ipAddress)){
-            logger.info("Blocked IP --- " + ipAddress);
-            response.getWriter().append("<h1 style=\"text-align:center;\">Not allowed!</h1>");
-            return false;
-        }
+//        if(!IpConfig.ALLOW_IP_LIST.contains(ipAddress)){
+//            logger.info("Blocked IP --- " + ipAddress);
+//            response.getWriter().append("<h1 style=\"text-align:center;\">Not allowed!</h1>");
+//            return false;
+//        }
 
         logger.info("Release IP --- " + ipAddress);
         return true;
