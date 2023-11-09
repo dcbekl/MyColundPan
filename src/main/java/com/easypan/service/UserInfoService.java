@@ -123,7 +123,7 @@ public interface UserInfoService {
 
     void updateUserStatus(String userId, Integer status);
 
-//    SessionWebUserDto qqLogin(String code);
+    SessionWebUserDto qqLogin(String code);
 
     void changeUserSpace(String userId, Integer changeSpace);
 }

@@ -19,5 +19,8 @@ public class IpConfig {
     static {
         ALLOW_IP_LIST.add(LOCAL_HOST);
         ALLOW_IP_LIST.add("111.229.171.86");
+        ALLOW_IP_LIST.add("39.144.162.4");
+        ALLOW_IP_LIST.add("61.190.213.226");
+
     }
 }

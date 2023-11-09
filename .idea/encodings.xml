@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/easypan/EasyPanApplication.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/test/java/com/easypan/testEnum/sdaf.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/test/java/com/easypan/utils/ggg.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/test/java/com/easypan/utils/jjjj.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/test/java/com/easypan/utils/kkk.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/test/java/com/easypan/utils/testEncodingGBK.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/test/java/com/easypan/utils/testGBK2.java" charset="GBK" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

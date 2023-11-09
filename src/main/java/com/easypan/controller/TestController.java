@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,7 +27,10 @@ import java.nio.file.Paths;
 public class TestController {
 
     @RequestMapping("/test")
-    public String test() {
+    public String test(HttpServletRequest request) {
+        String remoteAddr = request.getRemoteAddr();
+        String remoteHost = request.getRemoteHost();
+        String localAddr = request.getLocalAddr();
         return "test13246";
     }
 

@@ -16,6 +16,7 @@ import com.easypan.utils.IPUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,10 +28,20 @@ import javax.servlet.http.HttpServletResponse;
 public class IPInterceptor implements HandlerInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(RedisUtils.class);
 
+//    @Value("#{T(java.lang.Boolean).parseBoolean('${my.blocked-ip.enable:}')}")
+//    private Boolean ifBlockIP;
+
+
+    /* FIXME 没有读取到配置的值， ifBlockIP为null */
+
+    @Value("${my.ip.blocked.enable:}")
+    private String ifBlockIP;
+
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 获取请求接口的ip
-        // FIXME 没有获取真实的请求ip
+        // DelFIXME 没有获取真实的请求ip
         String ipAddress= IPUtils.getRealIP(request);
 
         // ip为空
@@ -40,11 +51,11 @@ public class IPInterceptor implements HandlerInterceptor {
 
         // FIXME ip拦截
         // 访问ip不在白名单中
-//        if(!IpConfig.ALLOW_IP_LIST.contains(ipAddress)){
-//            logger.info("Blocked IP --- " + ipAddress);
-//            response.getWriter().append("<h1 style=\"text-align:center;\">Not allowed!</h1>");
-//            return false;
-//        }
+        if("true".equals(ifBlockIP) && !IpConfig.ALLOW_IP_LIST.contains(ipAddress)){
+            logger.info("Blocked IP --- " + ipAddress);
+            response.getWriter().append("<h1 style=\"text-align:center;\">Not allowed!</h1>");
+            return false;
+        }
 
         logger.info("Release IP --- " + ipAddress);
         return true;
